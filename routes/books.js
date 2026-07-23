@@ -7,6 +7,8 @@ import {
   deleteBook,
 } from "../controllers/booksController.js";
 
+import { isAuthenticated } from "../middleware/authenticate.js";
+
 const router = express.Router();
 
 /**
@@ -63,6 +65,7 @@ router.get("/:id", getBookById);
  * /books:
  *   post:
  *     summary: Create a new book
+ *     description: Requires GitHub OAuth authentication.
  *     tags: [Books]
  *     requestBody:
  *       required: true
@@ -80,13 +83,14 @@ router.get("/:id", getBookById);
  *       500:
  *         description: Server error
  */
-router.post("/", createBook);
+router.post("/", isAuthenticated, createBook);
 
 /**
  * @swagger
  * /books/{id}:
  *   put:
  *     summary: Update a book
+ *     description: Requires GitHub OAuth authentication.
  *     tags: [Books]
  *     parameters:
  *       - in: path
@@ -115,13 +119,14 @@ router.post("/", createBook);
  *       500:
  *         description: Server error
  */
-router.put("/:id", updateBook);
+router.put("/:id", isAuthenticated, updateBook);
 
 /**
  * @swagger
  * /books/{id}:
  *   delete:
  *     summary: Delete a book
+ *     description: Requires GitHub OAuth authentication.
  *     tags: [Books]
  *     parameters:
  *       - in: path
@@ -140,6 +145,6 @@ router.put("/:id", updateBook);
  *       500:
  *         description: Server error
  */
-router.delete("/:id", deleteBook);
+router.delete("/:id", isAuthenticated, deleteBook);
 
 export default router;

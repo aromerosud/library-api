@@ -6,7 +6,7 @@ const options = {
     info: {
       title: "Library API",
       version: "1.0.0",
-      description: "API for managing books and authors",
+      description: "API for managing books and authors. POST, PUT and DELETE endpoints require authentication through GitHub OAuth. Authenticate by visiting /login before testing protected endpoints.",
     },
     servers: [
       {
@@ -17,6 +17,7 @@ const options = {
       },
     ],
   },
+
   apis: ["./routes/*.js", "./swaggerSchemas.js"],
 };
 

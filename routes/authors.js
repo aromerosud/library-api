@@ -7,6 +7,8 @@ import {
   deleteAuthor,
 } from "../controllers/authorsController.js";
 
+import { isAuthenticated } from "../middleware/authenticate.js";
+
 const router = express.Router();
 
 /**
@@ -55,6 +57,7 @@ router.get("/:id", getAuthorById);
  * /authors:
  *   post:
  *     summary: Create a new author
+ *     description: Requires GitHub OAuth authentication.
  *     tags: [Authors]
  *     requestBody:
  *       required: true
@@ -68,13 +71,14 @@ router.get("/:id", getAuthorById);
  *       500:
  *         description: Server error
  */
-router.post("/", createAuthor);
+router.post("/", isAuthenticated, createAuthor);
 
 /**
  * @swagger
  * /authors/{id}:
  *   put:
  *     summary: Update an author
+ *     description: Requires GitHub OAuth authentication.
  *     tags: [Authors]
  *     parameters:
  *       - in: path
@@ -96,13 +100,14 @@ router.post("/", createAuthor);
  *       404:
  *         description: Author not found
  */
-router.put("/:id", updateAuthor);
+router.put("/:id", isAuthenticated, updateAuthor);
 
 /**
  * @swagger
  * /authors/{id}:
  *   delete:
  *     summary: Delete an author
+ *     description: Requires GitHub OAuth authentication.
  *     tags: [Authors]
  *     parameters:
  *       - in: path
@@ -121,6 +126,6 @@ router.put("/:id", updateAuthor);
  *       500:
  *         description: Server error
  */
-router.delete("/:id", deleteAuthor);
+router.delete("/:id", isAuthenticated, deleteAuthor);
 
 export default router;
